@@ -1,0 +1,34 @@
+name: 'Cache OpenWrt'
+description: 'Cache builds to speed up openwrt compilation'
+inputs:
+  ccache:
+    description: 'check if to cache ccache'
+    required: false
+    default: false
+  toolchain:
+    description: 'check if to cache toolchain'
+    required: false
+    default: true
+  skip:
+    description: 'check if to skip the compilation of toolchain'
+    required: false
+    default: true
+  clean:
+    description: 'set to clean cache'
+    required: false
+    default: false
+  prefix:
+    description: 'path prefix to openwrt build directory'
+    required: false
+    defalut: ''
+outputs:
+  hit:
+    description: 'indicate cache found'
+runs:
+  using: 'node12'
+  main: 'main.js'
+  post: 'post.js'
+  post-if: 'success()'
+branding:
+  icon: 'archive'
+  color: 'gray-dark'
