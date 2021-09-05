@@ -43,7 +43,7 @@ try {
                 console.log(res, ' cache fetched!');
                 core.setOutput("hit", '1');
                 if (skiptoolchain == 'true') {
-                    console.log('skiped');
+                    console.log('skip the compilation of toolchain');
                     execSync('bash -c \'find build_dir\/{host*,toolchain-*} -name .built\\* -exec touch {} \\;; touch staging_dir\/{host*,toolchain-*}\/stamp\/.*\'');
                 }
             }
