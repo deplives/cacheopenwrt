@@ -36,7 +36,6 @@ try {
     const cache = require('@actions/cache');
     const clean = core.getInput('clean');
     if (clean == 'true') return;
-    console.log(keyString, restoreKeys);
     const cacheKey = cache.restoreCache(paths, keyString, restoreKeys)
         .then(res => {
             if (typeof res !== 'undefined' && res) {

@@ -28,11 +28,10 @@ try {
     }
 
     const cache = require('@actions/cache');
-    console.log(keyString);
     const cacheId = cache.saveCache(paths, keyString)
         .then(res => {
             if (typeof res !== 'undefined' && res) {
-                console.log(res, ' cache saved');
+                console.log('Cache saved');
             }
         })
 
