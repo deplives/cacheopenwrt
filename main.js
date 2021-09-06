@@ -40,10 +40,9 @@ try {
     const cacheKey = cache.restoreCache(paths, keyString, restoreKeys)
         .then(res => {
             if (typeof res !== 'undefined' && res) {
-                console.log(res, ' cache fetched!');
                 core.setOutput("hit", '1');
                 if (skiptoolchain == 'true') {
-                    console.log('skip the compilation of toolchain');
+                    console.log('Skip the compilation of toolchain');
                     execSync('bash -c \'find build_dir\/{host*,toolchain-*} -name .built\\* -exec touch {} \\;; touch staging_dir\/{host*,toolchain-*}\/stamp\/.*\'');
                 }
             }
