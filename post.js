@@ -31,7 +31,6 @@ try {
     const cacheId = cache.saveCache(paths, keyString)
         .then(res => {
             if (typeof res !== 'undefined' && res) {
-                console.log('Cache saved');
             }
         })
 
