@@ -29,10 +29,6 @@ try {
 
     const cache = require('@actions/cache');
     const cacheId = cache.saveCache(paths, keyString)
-        .then(res => {
-            if (typeof res !== 'undefined' && res) {
-            }
-        })
 
 } catch (error) {
     core.setFailed(error.message);
