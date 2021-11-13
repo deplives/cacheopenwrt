@@ -27,7 +27,8 @@ try {
         paths.push('.ccache');
     }
 
-    const cache = require('@actions/cache');
+    const cache = require('actions/cache@v2');
+    console.log("存储缓存 Key", keyString)
     const cacheId = cache.saveCache(paths, keyString)
 
 } catch (error) {

@@ -33,12 +33,15 @@ try {
         paths.push('.ccache');
     }
 
-    const cache = require('@actions/cache');
+    const cache = require('actions/cache@v2');
     const clean = core.getInput('clean');
     if (clean == 'true') return;
+    console.log("查询缓存 Key", keyString)
+    console.log("查询缓存 restoreKeys", restoreKeys)
     const cacheKey = cache.restoreCache(paths, keyString, restoreKeys)
         .then(res => {
             if (typeof res !== 'undefined' && res) {
+                console.log("缓存命中", res)
                 core.setOutput("hit", '1');
                 if (skiptoolchain == 'true') {
                     execSync('bash -c \'find build_dir\/{host*,toolchain-*} -name .built\\* -exec touch {} \\;; touch staging_dir\/{host*,toolchain-*}\/stamp\/.*\'');
