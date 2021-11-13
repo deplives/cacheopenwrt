@@ -42,7 +42,7 @@ try {
                 }
             }
             else {
-                console.log("缓存未命中", keyString)
+                console.log("缓存未命中")
             }
         })
 
