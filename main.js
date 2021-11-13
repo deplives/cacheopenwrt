@@ -4,8 +4,7 @@ const execSync = require('child_process').execSync;
 
 try {
     var paths = new Array();
-    var keyString = 'cache-openwrt';
-    var restoreKeys = new Array();
+    var keyString = 'openwrt-cache';
     const prefix = core.getInput('prefix');
     if (prefix != '') {
         process.chdir(prefix);
@@ -15,7 +14,6 @@ try {
     var skiptoolchain = core.getInput('skip');
     if (toolchain == 'true') {
         stdout = execSync('git log --pretty=tformat:"%h" -n1 tools toolchain').toString().trim();
-        restoreKeys.unshift(keyString);
         keyString = keyString + '-' + stdout;
         paths.push('staging_dir/host*');
         paths.push('staging_dir/tool*');
@@ -27,9 +25,6 @@ try {
 
     const ccache = core.getInput('ccache');
     if (ccache == 'true') {
-        stdout = execSync('date +%s').toString().trim();
-        restoreKeys.unshift(keyString);
-        keyString = keyString + '-' + stdout;
         paths.push('.ccache');
     }
 
@@ -37,8 +32,7 @@ try {
     const clean = core.getInput('clean');
     if (clean == 'true') return;
     console.log("查询缓存 Key", keyString)
-    console.log("查询缓存 restoreKeys", restoreKeys)
-    const cacheKey = cache.restoreCache(paths, keyString, restoreKeys)
+    const cacheKey = cache.restoreCache(paths, keyString)
         .then(res => {
             if (typeof res !== 'undefined' && res) {
                 console.log("缓存命中", res)
@@ -46,6 +40,9 @@ try {
                 if (skiptoolchain == 'true') {
                     execSync('bash -c \'find build_dir\/{host*,toolchain-*} -name .built\\* -exec touch {} \\;; touch staging_dir\/{host*,toolchain-*}\/stamp\/.*\'');
                 }
+            }
+            else {
+                console.log("缓存未命中", keyString)
             }
         })
 

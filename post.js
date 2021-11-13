@@ -4,7 +4,7 @@ const execSync = require('child_process').execSync;
 
 try {
     var paths = new Array();
-    var keyString = 'cache-openwrt';
+    var keyString = 'openwrt-cache';
     const prefix = core.getInput('prefix');
     if (prefix != '') {
         process.chdir(prefix);
@@ -22,8 +22,6 @@ try {
 
     const ccache = core.getInput('ccache');
     if (ccache == 'true') {
-        stdout = execSync('date +%s').toString().trim();
-        keyString = keyString + '-' + stdout;
         paths.push('.ccache');
     }
 
