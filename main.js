@@ -31,7 +31,7 @@ try {
     const cache = require('@actions/cache');
     const clean = core.getInput('clean');
     if (clean == 'true') return;
-    console.log("查询缓存 Key", keyString)
+    console.log("查询缓存", keyString)
     const cacheKey = cache.restoreCache(paths, keyString)
         .then(res => {
             if (typeof res !== 'undefined' && res) {
