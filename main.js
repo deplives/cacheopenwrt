@@ -33,7 +33,7 @@ try {
         paths.push('.ccache');
     }
 
-    const cache = require('actions/cache@v2');
+    const cache = require('actions/cache');
     const clean = core.getInput('clean');
     if (clean == 'true') return;
     console.log("查询缓存 Key", keyString)
