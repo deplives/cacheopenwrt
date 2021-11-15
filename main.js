@@ -5,6 +5,7 @@ const execSync = require('child_process').execSync;
 try {
     var paths = new Array();
     var keyString = 'openwrt-cache';
+    var restoreKeys = new Array();
     const prefix = core.getInput('prefix');
     if (prefix != '') {
         process.chdir(prefix);
@@ -13,8 +14,11 @@ try {
     const toolchain = core.getInput('toolchain');
     var skiptoolchain = core.getInput('skip');
     if (toolchain == 'true') {
-        stdout = execSync('git log --pretty=tformat:"%h" -n1 tools toolchain').toString().trim();
-        keyString = keyString + '-' + stdout;
+        commithash = execSync('git log --pretty=tformat:"%h" -n1 tools toolchain').toString().trim();
+        date = execSync('date +%s').toString().trim();
+        keyString = keyString + '-' + commithash;
+        restoreKeys.unshift(keyString);
+        keyString = keyString + '-' + date;
         paths.push('staging_dir/host*');
         paths.push('staging_dir/tool*');
         paths.push('build_dir/host*');
@@ -31,8 +35,8 @@ try {
     const cache = require('@actions/cache');
     const clean = core.getInput('clean');
     if (clean == 'true') return;
-    console.log("查询缓存", keyString)
-    const cacheKey = cache.restoreCache(paths, keyString)
+    console.log("查询缓存", keyString, restoreKeys[0])
+    const cacheKey = cache.restoreCache(paths, keyString, restoreKeys)
         .then(res => {
             if (typeof res !== 'undefined' && res) {
                 console.log("缓存命中", res)

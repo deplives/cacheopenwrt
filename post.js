@@ -12,8 +12,9 @@ try {
 
     const toolchain = core.getInput('toolchain');
     if (toolchain == 'true') {
-        stdout = execSync('git log --pretty=tformat:"%h" -n1 tools toolchain').toString().trim();
-        keyString = keyString + '-' + stdout;
+        commithash = execSync('git log --pretty=tformat:"%h" -n1 tools toolchain').toString().trim();
+        date = execSync('date +%s').toString().trim();
+        keyString = keyString + '-' + commithash + '-' + date
         paths.push('staging_dir/host*');
         paths.push('staging_dir/tool*');
         paths.push('build_dir/host*');
