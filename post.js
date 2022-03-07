@@ -31,5 +31,5 @@ try {
     const cacheId = cache.saveCache(paths, keyString)
 
 } catch (error) {
-    core.setFailed(error.message);
+    core.warning(error.message);
 }
