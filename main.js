@@ -5,7 +5,10 @@ const execSync = require('child_process').execSync;
 try {
     var paths = new Array();
     var keyString = 'openwrt-cache';
-    var restoreKeys = new Array();
+    var 
+    
+    
+    = new Array();
     const prefix = core.getInput('prefix');
     if (prefix != '') {
         process.chdir(prefix);
@@ -35,7 +38,7 @@ try {
     const cache = require('@actions/cache');
     const clean = core.getInput('clean');
     if (clean == 'true') return;
-    console.log("查询缓存", keyString, restoreKeys[0])
+    console.log("查询缓存", keyString)
     const cacheKey = cache.restoreCache(paths, keyString, restoreKeys)
         .then(res => {
             if (typeof res !== 'undefined' && res) {
