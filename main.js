@@ -5,10 +5,7 @@ const execSync = require('child_process').execSync;
 try {
     var paths = new Array();
     var keyString = 'openwrt-cache';
-    var 
-    
-    
-    = new Array();
+    var restoreKeys = new Array();
     const prefix = core.getInput('prefix');
     if (prefix != '') {
         process.chdir(prefix);
